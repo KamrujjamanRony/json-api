@@ -5,8 +5,14 @@ const fs = require('fs');
 const app = express();
 const port = 3000;
 
+// middleware
+app.use(cors({
+    origin: ["https://json-api-g1y2.onrender.com"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    credentials: true
+  }));
 app.use(bodyParser.json());
-app.use(cors());
+
 
 app.get('/api/software', (req, res) => {
   const data = JSON.parse(fs.readFileSync('./software.json', 'utf-8'));
