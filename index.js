@@ -1,19 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const cors = require("cors");
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
 
-// middleware
-app.use(cors({
-    origin: ["https://json-api-g1y2.onrender.com"],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    credentials: true
-  }));
+// Middleware
+app.use(cors());
 app.use(bodyParser.json());
-
 
 app.get('/api/software', (req, res) => {
   const data = JSON.parse(fs.readFileSync('./software.json', 'utf-8'));
@@ -23,7 +18,7 @@ app.get('/api/software', (req, res) => {
 app.post('/api/software', (req, res) => {
   const data = JSON.parse(fs.readFileSync('./software.json', 'utf-8'));
   const newRecord = req.body;
-  newRecord.id = generateUniqueId(); // Implement a function to generate a unique ID
+  newRecord.id = generateUniqueId();
   data.push(newRecord);
 
   fs.writeFileSync('./software.json', JSON.stringify(data, null, 2));
@@ -37,5 +32,5 @@ app.listen(port, () => {
 });
 
 function generateUniqueId() {
-    return ((Math.random() * 9999999999 * Math.random() * 55555) - (Math.random() * 1111111111)).toString().split('.')[0];
+  return ((Math.random() * 9999999999 * Math.random() * 55555) - (Math.random() * 1111111111)).toString().split('.')[0];
 }
