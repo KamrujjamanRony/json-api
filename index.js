@@ -7,6 +7,10 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.json("Welcome to my World!");
+});
+
 app.get('/api/software', (req, res) => {
   const data = JSON.parse(fs.readFileSync('./software.json', 'utf-8'));
   res.json(data);
